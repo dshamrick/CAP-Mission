@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true"
+             x:Class="CAPMission.View.SortieReportView">
+    <ContentPage.Content>
+        <ScrollView Margin="0,30,0,0">
+            <RelativeLayout VerticalOptions="Fill">
+                <StackLayout Orientation="Vertical" Padding="20,20,20,20"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.98}"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.0}">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" >
+                        <Label Text="Current Mission:" Font="Bold" />
+                        <Picker ItemsSource="{Binding MissionCatalogList}" SelectedItem="{Binding CurrentMissionNumber}" WidthRequest="120" TextColor="Blue" Margin="15,0,15,0"/>
+                        <!--<Label Text="{Binding CurrentMissionNumber}" Font="Bold" TextColor="Blue" Margin="15,0,15,0"/>-->
+                        <Label Text="Sortie Report" Font="Bold" Margin="15,0,15,0"/>
+                    </StackLayout>
+                    <ListView x:Name="SortieReportList" ItemsSource="{Binding SortieList}" HeightRequest="420" RowHeight="60" Margin="0,8,0,0">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition  RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.0}"
+                                                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.25}" />
+                                            <ColumnDefinition  RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.25}"
+                                                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.1}" />
+                                            <ColumnDefinition  RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.26}"
+                                                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.25}" />
+                                            <ColumnDefinition  RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.52}"
+                                                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.10}" />
+                                            <ColumnDefinition  RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.62}"
+                                                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.1}" />
+                                            <ColumnDefinition  RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.63}"
+                                                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.25}" />
+                                            <ColumnDefinition  RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.89}"
+                                                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.10}" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30" />
+                                            <RowDefinition Height="30" />
+                                        </Grid.RowDefinitions>
+                                        <Label Text="{Binding Number}" Grid.Column="0" Grid.Row="0" />
+                                        <Label Text="{Binding Tail}" Grid.Column="0" Grid.Row="1" />
+                                        <Label Text="H" Font="Bold" Grid.Column="1" Grid.Row="0"/>
+                                        <Label Text="{Binding EndHobbs}" Grid.Column="2" Grid.Row="0" />
+                                        <Label Text="{Binding StartHobbs}" Grid.Column="2" Grid.Row="1" />
+                                        <Label Text="{Binding HobbsTime}" Grid.Column="3" Grid.Row="1" />
+                                        <Label Text="T" Font="Bold" Grid.Column="4" Grid.Row="0" />
+                                        <Label Text="{Binding EndTach}" Grid.Column="5" Grid.Row="0" />
+                                        <Label Text="{Binding StartTach}" Grid.Column="5" Grid.Row="1" />
+                                        <Label Text="{Binding TachTime}" Grid.Column="6" Grid.Row="1" />
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Total Hobbs: " Font="Bold" Margin="10,0,0,0" />
+                        <Label Text="{Binding TotalHobbs}" Margin="40,0,0,0" />
+                        <Label Text="Total Tach: " Font="Bold" Margin="10,0,0,0" />
+                        <Label Text="{Binding TotalTach}" Margin="30,0,0,0" />
+                    </StackLayout>
+                    <Button Text="Close" Command="{Binding CancelCommand}" Style="{StaticResource ButtonStyle}" WidthRequest="120"/>
+                </StackLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

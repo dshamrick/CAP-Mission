@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctrl="clr-namespace:CAPMission.Controls"
+             xmlns:help="clr-namespace:CAPMission.Helpers"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true"
+             x:Class="CAPMission.View.SortieNotesView">
+    <ContentPage.Content>
+        <ScrollView Margin="0,30,0,0">
+            <RelativeLayout VerticalOptions="Fill">
+                <StackLayout Orientation="Vertical" Padding="20,20,20,20" RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.98}"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.0}">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" >
+                        <Label Text="Current Mission:" Font="Bold" Margin="15,0,15,0"/>
+                        <Label Text="{Binding CurrentMissionNumber}" Font="Bold" TextColor="Blue" Margin="15,0,15,0"/>
+                        <Label Text="Sortie Notes" Font="Bold" Margin="15,0,15,0"/>
+                        <!--<Button Text="New" Command="{Binding AddNewNoteCommand}" Style="{StaticResource ButtonStyle}" WidthRequest="120" HorizontalOptions="End" IsEnabled="{Binding AddButtonEnabled}" />-->
+                    </StackLayout>
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Related Sortie"/>
+                            <Label Text="{Binding SelectedSortieNumber}" HorizontalOptions="Center" />
+                        </StackLayout>
+                        <Editor Text="{Binding NoteEntry1}" Margin="2,2,2,2"  BackgroundColor="AntiqueWhite" HorizontalOptions="FillAndExpand" Unfocused="Editor_Unfocused" HeightRequest="150"/>
+                        <StackLayout Padding="10,10,10,0" Orientation="Horizontal" >
+                            <Label Text="Marked Points" />
+                            <Button Text="MARK" Command="{Binding MarkLocationCommand}" Style="{StaticResource ButtonStyle}" WidthRequest="120" />
+                        </StackLayout>
+                        <ListView x:Name="MarkList" ItemsSource="{Binding SortieMarkList}" RowHeight="45" HeightRequest="180" >
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <Label Text="Lat:" Grid.Row="0" Grid.Column="0"/>
+                                                <Label Text="{Binding LatDegDM}" Grid.Row="1" Grid.Column="0"/>
+                                                <Label Text="Lon:" Grid.Row="0" Grid.Column="1"/>
+                                                <Label Text="{Binding LongDegDM}" Grid.Row="1" Grid.Column="1"/>
+                                                <ctrl:ImageButton Source="{help:ImageResource CAPMission.Resources.Select.png}" 
+                                                   Command="{Binding Source={x:Reference MarkList}, Path=BindingContext.EditMarkCommand}" CommandParameter="{Binding .}" 
+                                                   Grid.Column="2" Grid.RowSpan="2" />
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="Cancel" Command="{Binding CancelCommand}" Style="{StaticResource ButtonStyle}" WidthRequest="120"/>
+                        <Button Text="Save" Command="{Binding SaveNoteCommand}"  IsEnabled="{Binding CanSaveNote}" Style="{StaticResource ButtonStyle}" WidthRequest="120" />
+                    </StackLayout>
+                </StackLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

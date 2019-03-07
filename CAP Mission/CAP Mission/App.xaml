@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CAPMission.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ButtonStyle" TargetType="Button" >
+                <Setter Property="TextColor" Value="DarkBlue" />
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="BackgroundColor" Value="LightGray" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

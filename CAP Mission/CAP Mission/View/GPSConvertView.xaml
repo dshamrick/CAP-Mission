@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctrl="clr-namespace:CAPMission.Controls"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true"
+             x:Class="CAPMission.View.GPSConvertView">
+    <ContentPage.Content>
+        <ScrollView>
+            <RelativeLayout VerticalOptions="Fill">
+                <StackLayout Orientation="Vertical" Padding="8,10,8,10"
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.9}"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.1}">
+                    <StackLayout Orientation="Vertical" Spacing="4" Padding="0,0,10,0">
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="Latitude"/>
+                            <Entry Text="{Binding LatEntered}" Keyboard="Numeric" />
+                            <Label Text="Longitude"/>
+                            <Entry Text="{Binding LongEntered}" Keyboard="Numeric"/>
+                            <Button Text="Convert" Command="{Binding ConvertCommand}" Style="{StaticResource ButtonStyle}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="Converted Lat" />
+                            <Label Text="{Binding ConvertedLat}" />
+                            <Label Text="Converted Lon" />
+                            <Label Text="{Binding ConvertedLong}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <ListView x:Name="ConvertedValues" ItemsSource="{Binding ConvertedValues}" HeightRequest="240" RowHeight="60" Margin="0,8,0,0">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="30" />
+                                                    <RowDefinition Height="30" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="85" />
+                                                    <ColumnDefinition Width="100"/>
+                                                    <ColumnDefinition Width="100"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Text="Entered" Grid.Row="0" Grid.Column="0"/>
+                                                <Label Text="{Binding LatDecDegrees}" Grid.Row="0" Grid.Column="1" />
+                                                <Label Text="{Binding LongDecDegrees}" Grid.Row="0" Grid.Column="2" />
+                                                <Label Text="Converted" Grid.Row="1" Grid.Column="0" />
+                                                <Label Text="{Binding LatDegDM}" Grid.Row="1" Grid.Column="1" />
+                                                <Label Text="{Binding LongDegDM}" Grid.Row="1" Grid.Column="2" />
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" >
+                            <Button Text="Close" Margin="5,0,30,0" Command="{Binding CancelCommand}" Style="{StaticResource ButtonStyle}" WidthRequest="120"/>
+                            <Button Text="Clear" Margin="10,0,0,0" Command="{Binding ClearCommand}" Style="{StaticResource ButtonStyle}" WidthRequest="120"/>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

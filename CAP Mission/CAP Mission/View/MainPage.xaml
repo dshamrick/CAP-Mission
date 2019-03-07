@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true"
+             x:Class="CAPMission.View.MainPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <RelativeLayout VerticalOptions="Fill">
+                <StackLayout Orientation="Vertical" Padding="8,0,8,20"
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.8}"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.1}">
+                    <StackLayout Orientation="Horizontal">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="96"/>
+                                <ColumnDefinition Width="98"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="Current Mission: " Font="Bold" Grid.Column="0"/>
+                            <Label Text="{Binding CurrentMissionNumber}" Grid.Column="1" Font="Bold" TextColor="Blue"/>
+                        </Grid>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical" Spacing="16" Padding="0,10,0,10">
+                        <Button Text="Mission Catalog" Command="{Binding MissionCatalogCommand}"  
+                                    Style="{StaticResource ButtonStyle}" />
+                        <Button Text="Manage Sorties" Command="{Binding SortieCommand}"  
+                                    IsEnabled="{Binding MissionButtonsEnabled}"  Style="{StaticResource ButtonStyle}" />
+                        <!--<Button Text="Sortie Notes" Command="{Binding SortieNoteCommand}"  
+                                    IsEnabled="{Binding MissionButtonsEnabled}"  Style="{StaticResource ButtonStyle}" />-->
+                        <Button Text="Sortie Report" Command="{Binding SortieReportCommand}"  
+                                    IsEnabled="{Binding MissionButtonsEnabled}"  Style="{StaticResource ButtonStyle}" />
+                        <Button Text="GPS Tools" Command="{Binding GPSConvertCommand}" 
+                                Style="{StaticResource ButtonStyle}" />
+                        <Button Text="Settings" Command="{Binding SettingsCommand}" 
+                                Style="{StaticResource ButtonStyle}" />
+                    </StackLayout>
+                </StackLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

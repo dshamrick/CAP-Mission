@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctrl="clr-namespace:CAPMission.Controls"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true"
+             x:Class="CAPMission.View.SortieManagementView">
+    <ContentPage.Content>
+        <ScrollView Margin="0,30,0,0">
+            <RelativeLayout VerticalOptions="Fill">
+                <StackLayout  Padding="8,10,8,20"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.9}"
+                    RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.05}">
+                    <StackLayout Orientation="Horizontal" >
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.02}"
+                                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.15}"/>
+                                <ColumnDefinition RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.17}"
+                                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.15}"/>
+                                <ColumnDefinition RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.50}"
+                                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.15}"/>
+                                <ColumnDefinition RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.68}"
+                                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.15}"/>
+                                <ColumnDefinition RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.80}"
+                                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.15}" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="28"/>
+                                <RowDefinition Height="28"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="38"/>
+                            </Grid.RowDefinitions>
+                            <Label Text="Current Mission:" Font="Bold" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" VerticalTextAlignment="Center"/>
+                            <Label Text="{Binding CurrentMissionNumber}" Grid.Column="2" Font="Bold" TextColor="Blue" Grid.Row="0" Grid.ColumnSpan="2" VerticalTextAlignment="Center"/>
+                            <Label Text="Sortie:" Font="Bold" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" VerticalTextAlignment="Center"/>
+                            <Label Text="{Binding SortieNumber}" Grid.Column="1" Font="Bold" TextColor="Blue" Grid.Row="1" Grid.ColumnSpan="2" VerticalTextAlignment="Center"/>
+                            <Label Text="Date:" Font="Bold" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalTextAlignment="Center"/>
+                            <DatePicker Date="{Binding SortieDate}" Grid.Column="1" TextColor="Blue" Grid.Row="2" Grid.ColumnSpan="2" />
+                            <Label Text="Tail:" Font="Bold" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding TailNumber}" Grid.Column="1"  TextColor="Blue" Grid.Row="3" WidthRequest="100" /> 
+                            <Button Text="Note" Command="{Binding SortieNoteCommand}" Style="{StaticResource ButtonStyle}" Grid.Column="4" Grid.RowSpan="2" Grid.Row="0" />
+                        </Grid>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical" Padding="10,0,10,10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                            </Grid.RowDefinitions>
+                            <Label Text="{Binding EngineStartLabel}" Grid.Column="0" Grid.Row="0"/>
+                            <Button Text="Edit" Command="{Binding EditESCommand}" Grid.Column="1" Grid.Row="0"/>
+                            <Label Text="{Binding WheelsUpLabel}"    Grid.Column="0" Grid.Row="1"/>
+                            <Button Text="Edit" Command="{Binding EditWheelsUpCommand}" Grid.Column="1" Grid.Row="1"/>
+                            <Label Text="{Binding WheelsDownLabel}"  Grid.Column="0" Grid.Row="2"/>
+                            <Button Text="Edit" Command="{Binding EditWheelsDnCommand}" Grid.Column="1" Grid.Row="2"/>
+                            <Label Text="{Binding EngineStopLabel}"  Grid.Column="0" Grid.Row="3"/>
+                            <Button Text="Edit" Command="{Binding EditEngineStopCommand}" Grid.Column="1" Grid.Row="3"/>
+                        </Grid>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical" >
+                        <Label Text="Times:" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.02}"
+                                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.15}"/>
+                                <ColumnDefinition RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.17}"
+                                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.15}"/>
+                                <ColumnDefinition RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.50}"
+                                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.15}"/>
+                                <ColumnDefinition RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.68}"
+                                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.15}"/>
+                                <ColumnDefinition RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.80}"
+                                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.15}" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Label Text="Hobbs:" Grid.Row="0" Grid.Column="0" />
+                            <Label Text="Tach:" Grid.Row="0" Grid.Column="2" />
+                            <Label Text="End" Grid.Row="1" Grid.Column="1"  />
+                            <Label Text="Start" Grid.Row="2" Grid.Column="1" />
+                            <Entry Text="{Binding HobbsEnd}" Grid.Row="1" Grid.Column="0"  Keyboard="Numeric"/>
+                            <Entry Text="{Binding HobbsStart}" Grid.Row="2" Grid.Column="0" Keyboard="Numeric"/>
+                            <Label Text="End" Grid.Row="1" Grid.Column="3" />
+                            <Label Text="Start" Grid.Row="2" Grid.Column="3" />
+                            <Entry Text="{Binding TachEnd}" Grid.Row="1" Grid.Column="2" Keyboard="Numeric"/>
+                            <Entry Text="{Binding TachStart}" Grid.Row="2" Grid.Column="2" Keyboard="Numeric"/>
+                            <Label Text="{Binding HobbsTime}" Grid.Row="3" Grid.Column="0"/>
+                            <Label Text="{Binding TachTime}" Grid.Row="3" Grid.Column="2" />
+                            <Button Text="Update" Command="{Binding SaveSortieCommand}" Style="{StaticResource ButtonStyle}" Grid.Column="4" Grid.RowSpan="2" Grid.Row="1"/>
+                        </Grid>
+                    </StackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="55"/>
+                            <RowDefinition Height="55"/>
+                        </Grid.RowDefinitions>
+                        <Button Text="Engine Start" Command="{Binding EngineStartCommand}" Style="{StaticResource ButtonStyle}" IsEnabled="{Binding CanEngineStartCommand}" Grid.Row="0" Grid.Column="0" />
+                        <Button Text="Wheels Up"    Command="{Binding WheelsUpCommand}" Style="{StaticResource ButtonStyle}"    IsEnabled="{Binding CanWheelsUpCommand}" Grid.Row="1" Grid.Column="0" />
+                        <Button Text="Wheels Down"  Command="{Binding WheelsDnCommand}" Style="{StaticResource ButtonStyle}"    IsEnabled="{Binding CanWheelsDNCommand}" Grid.Row="0" Grid.Column="2" />
+                        <Button Text="Engine Stop"  Command="{Binding EngineStopCommand}" Style="{StaticResource ButtonStyle}"  IsEnabled="{Binding CanEngineStopCommand}" Grid.Row="1" Grid.Column="2" />
+                    </Grid>
+                    <StackLayout>
+                        <Button Text="Close" Command="{Binding CancelCommand}" Style="{StaticResource ButtonStyle}"/>
+                    </StackLayout>
+                </StackLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

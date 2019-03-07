@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctrl="clr-namespace:CAPMission.Controls"
+             xmlns:help="clr-namespace:CAPMission.Helpers"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true"
+             x:Name="SortieSummary"
+             x:Class="CAPMission.View.SortieSummaryView">
+    <ContentPage.Content>
+        <ScrollView Margin="0,30,0,0">
+            <RelativeLayout VerticalOptions="Fill">
+                <StackLayout Orientation="Vertical" Padding="20,20,20,20"
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.9}"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.05}">
+                    <StackLayout>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="70" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="Current Mission:" Font="Bold" Grid.Column="0"/>
+                            <Picker ItemsSource="{Binding MissionCatalogList}" SelectedItem="{Binding CurrentMissionNumber}" Grid.Column="1" TextColor="Blue" WidthRequest="120" HorizontalOptions="Start" />
+                            <Button Text="Add" Command="{Binding AddNewSortieCommand}" Grid.Column="2"  Style="{StaticResource ButtonStyle}" IsEnabled="{Binding CanAddNewSortie}" />
+                        </Grid>
+                        <ContentView x:Name="SortieAddContentViewContainer" IsVisible="{Binding ShowSortieAddContent}" Content="{Binding AddNewSortie}" />
+                    </StackLayout>
+                    <StackLayout>
+                        <help:ClickableListView x:Name="SortieList" ItemsSource="{Binding SortieList}" RowClickCommand="{Binding SortieSelectCommand}" HeightRequest="420">
+                            <!--  SelectedItem="{Binding SelectedSortie, Mode=TwoWay}"-->
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <RelativeLayout HorizontalOptions="FillAndExpand"  Padding="5,0,10,0">
+                                            <Label Text="{Binding Number}" 
+                                                   RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.02}"
+                                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.17}" />
+                                            <Label Text="{Binding SortieDate}" 
+                                                   RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.21}"
+                                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.25}" />
+                                            <Label Text="{Binding Tail}"  
+                                                   RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.48}"
+                                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.22}" />
+                                            <Button Text="N" Font="Bold" TextColor="Black"
+                                                   Command="{Binding Source={x:Reference SortieSummary}, Path=BindingContext.SortieNoteCommand}" CommandParameter="{Binding Number}" 
+                                                   RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.70}" IsVisible="{Binding Notes}"
+                                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.15}" />
+                                            <ctrl:ImageButton Source="{help:ImageResource CAPMission.Resources.Delete.png}" 
+                                                   Command="{Binding Source={x:Reference SortieSummary}, Path=BindingContext.SortieDeleteCommand}" CommandParameter="{Binding Number}" 
+                                                   RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.88}" Aspect="AspectFit"
+                                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.15}" />
+                                        </RelativeLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </help:ClickableListView>
+                    </StackLayout>
+                    <StackLayout>
+                        <Button Text="Close" Command="{Binding CancelCommand}" Style="{StaticResource ButtonStyle}"/>
+                    </StackLayout>
+                </StackLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

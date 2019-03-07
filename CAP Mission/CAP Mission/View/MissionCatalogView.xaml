@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctrl="clr-namespace:CAPMission.Controls"
+             xmlns:help="clr-namespace:CAPMission.Helpers"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true"             
+             x:Class="CAPMission.View.MissionCatalogView">
+    <ContentPage.Content>
+        <ScrollView Margin="0,30,0,0">
+            <RelativeLayout VerticalOptions="Fill">
+                <StackLayout Orientation="Vertical" Padding="20,20,20,20"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.98}"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.0}">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" >
+                        <Label Text="Current Mission:" Font="Bold" />
+                        <Label Text="{Binding CurrentMissionNumber}" Font="Bold" TextColor="Blue" WidthRequest="120"/>
+                        <Button Text="Make Active" Command="{Binding MakeActiveCommand}" Style="{StaticResource ButtonStyle}" IsEnabled="{Binding CanMakeActive}" WidthRequest="80" HorizontalOptions="End" VerticalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                        <Label Text="New Mission:" />
+                        <Entry Text="{Binding NewMissionNumber}" WidthRequest="120" />
+                        <Button Text="ADD" Command="{Binding AddMissionCommand}" Style="{StaticResource ButtonStyle}" IsEnabled="{Binding CanAddMission}" WidthRequest="80" HorizontalOptions="End"/>
+                    </StackLayout>
+                    <StackLayout>
+                        <ListView x:Name="MissionList" ItemsSource="{Binding MissionCatalogList}" SelectedItem="{Binding SelectedMission}" HeightRequest="360" RowHeight="40" Margin="0,8,0,0">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <RelativeLayout HorizontalOptions="FillAndExpand"  Padding="5,0,10,0">
+                                            <Label Text="{Binding .}"  TextColor="Black" FontSize="Large"
+                                                   RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.02}"
+                                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.80}" />
+                                            <ctrl:ImageButton Source="{help:ImageResource CAPMission.Resources.Delete.png}" 
+                                                   Command="{Binding Source={x:Reference MissionList}, Path=BindingContext.MisionDeleteCommand}" CommandParameter="{Binding .}" 
+                                                   RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.85}" Aspect="AspectFit"
+                                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.15}" />
+                                        </RelativeLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+                    <StackLayout>
+                        <Button Text="Close" Command="{Binding CancelCommand}" Style="{StaticResource ButtonStyle}"/>
+                    </StackLayout>
+                </StackLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

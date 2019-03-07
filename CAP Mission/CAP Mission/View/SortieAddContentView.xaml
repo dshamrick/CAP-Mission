@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true"
+             x:Class="CAPMission.View.SortieAddContentView">
+  <ContentView.Content>
+        <ScrollView>
+            <StackLayout Padding="8,0,8,20"
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.9}"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.05}">
+                <StackLayout Orientation="Horizontal" Spacing="2">
+                    <Label Text="Mission #" />
+                    <Label Text="{Binding CurrentMissionNumber}" />
+                </StackLayout>
+                <StackLayout Orientation="Vertical" Spacing="4" HorizontalOptions="FillAndExpand">
+                    <DatePicker Date="{Binding SortieDate}" />
+                    <StackLayout Orientation="Horizontal" Spacing="4" HorizontalOptions="FillAndExpand">
+                        <Label Text="Sortie Number" />
+                        <Entry Text="{Binding SortieNumber}" HorizontalOptions="FillAndExpand" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Spacing="4" HorizontalOptions="FillAndExpand">
+                        <Label Text="Tail Number"/>
+                        <Entry Text="{Binding Tail}"   HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Margin="5,0,20,0" HorizontalOptions="CenterAndExpand">
+                    <Button Text="Cancel" Command="{Binding CloseCommand}" Style="{StaticResource ButtonStyle}" WidthRequest="120"/>
+                    <Button Text="Save" Command="{Binding SaveNewSortieCommand}"  IsEnabled="{Binding CanSaveNewSortie}" Style="{StaticResource ButtonStyle}" WidthRequest="120" />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+   </ContentView.Content>
+</ContentView>
