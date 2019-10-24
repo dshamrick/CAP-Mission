@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:help="clr-namespace:CAPMission.Helpers"
+             mc:Ignorable="d"
+             x:Name="AddAircraftContent"
+             x:Class="CAPMission.View.AddAircraftContentView">
+  <ContentView.Content>
+      <StackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <Label Text="Tail # " Grid.Row="0" Grid.Column="0"  VerticalOptions="Center"/>
+                <Entry Text="{Binding CurrentTail}" Grid.Column="1" Grid.Row="0" WidthRequest="100" VerticalOptions="Center" />
+                <Button Text="Save" Command="{Binding SaveAircraftCommand}" Grid.Column="2" Grid.Row="0" WidthRequest="75" IsEnabled="{Binding CanSaveAircraft}"
+                        HorizontalOptions="Center" Style="{StaticResource ButtonStyle}"  VerticalOptions="Center"/>
+                <ListView Grid.Column="1" Grid.Row="1" x:Name="MyAircraftList" 
+                    ItemsSource="{Binding CurrentAircraftList}" RowHeight="45" HeightRequest="135">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.ContextActions>
+                                    <MenuItem Command="{Binding Source={x:Reference AddAircraftContent}, Path=BindingContext.DeleteAircraftCommand}"
+                                    CommandParameter="{Binding .}"
+                                      Text="Delete" IsDestructive="True" />
+                                </ViewCell.ContextActions>
+                                <Label Text="{Binding TailNumber}" />
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+      </StackLayout>
+  </ContentView.Content>
+</ContentView>

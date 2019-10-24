@@ -1,6 +1,7 @@
 ﻿                                 using CAPMission.Library.DataModel;
 using CAPMission.View;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -22,6 +23,7 @@ namespace CAPMission.ViewModel
         private SortieAddContentView addNewSortie;
         private bool showSortieAddContent;
         private bool canAddNewSortie;
+        private Aircraft selectedAircraft;
         private ObservableCollection<ListSortie> sortieList;
         #region AddSortie Content View Properties
         public bool CanSaveNewSortie
@@ -64,6 +66,20 @@ namespace CAPMission.ViewModel
             {
                 newSortie.Tail = value;
                 RaisePropertyChanged("Tail");
+            }
+        }
+        public List<String> AircraftPickList
+        {
+            get
+            {
+                return AircraftList.Select(ac => ac.TailNumber).ToList <string>();
+            }
+        }
+        public string SelectedAircraft
+        {
+            set
+            {
+                Tail = value;
             }
         }
         public ObservableCollection<ListSortie> SortieList

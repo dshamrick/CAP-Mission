@@ -16,6 +16,7 @@ namespace CAPMission.ViewModel
         private ICommand sortieReportCommand;
         private ICommand sortieNoteCommand;
         private ICommand missionCatalogCommand;
+        private ICommand miscCommand;
         public bool MissionButtonsEnabled
         {
             get
@@ -32,7 +33,7 @@ namespace CAPMission.ViewModel
         public ICommand SortieReportCommand { get => sortieReportCommand; }
         public ICommand SortieNoteCommand { get => sortieNoteCommand; }
         public ICommand MissionCatalogCommand { get => missionCatalogCommand; }
-
+        public ICommand MiscCommand { get => miscCommand; }
         public MainPageViewModel(INavigation navigation) : base(navigation)
         {
             LoadCurrentMission();
@@ -42,6 +43,7 @@ namespace CAPMission.ViewModel
             sortieReportCommand = new Command(ExecSortieReportCommand);
             sortieNoteCommand = new Command(ExecSortieNoteCommand);
             missionCatalogCommand = new Command(ExecMissionCatalogCommand);
+            miscCommand = new Command(ExecMiscFunction);
         }
 
         private void ExecSettingsCommand()
@@ -70,6 +72,10 @@ namespace CAPMission.ViewModel
         private void ExecMissionCatalogCommand()
         {
             ModalNavigation(new MissionCatalogView());
+        }
+        private void ExecMiscFunction()
+        {
+            StorageHelper.DeleteVariable(AircraftListKey);
         }
     }
 }

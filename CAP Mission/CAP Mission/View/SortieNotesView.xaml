@@ -27,7 +27,7 @@
                             <Label Text="Marked Points" />
                             <Button Text="MARK" Command="{Binding MarkLocationCommand}" Style="{StaticResource ButtonStyle}" WidthRequest="120" />
                         </StackLayout>
-                        <ListView x:Name="MarkList" ItemsSource="{Binding SortieMarkList}" RowHeight="45" HeightRequest="180" >
+                        <help:ClickableListView x:Name="MarkList" ItemsSource="{Binding SortieMarkList}" RowClickCommand="{Binding EditMarkCommand}" RowHeight="45" HeightRequest="180" >
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell>
@@ -45,14 +45,14 @@
                                                 <Label Text="{Binding LatDegDM}" Grid.Row="1" Grid.Column="0"/>
                                                 <Label Text="Lon:" Grid.Row="0" Grid.Column="1"/>
                                                 <Label Text="{Binding LongDegDM}" Grid.Row="1" Grid.Column="1"/>
-                                                <ctrl:ImageButton Source="{help:ImageResource CAPMission.Resources.Select.png}" 
-                                                   Command="{Binding Source={x:Reference MarkList}, Path=BindingContext.EditMarkCommand}" CommandParameter="{Binding .}" 
+                                            <Button Text="M" Font="Bold" TextColor="Black"                                                   
+                                                   Command="{Binding Source={x:Reference MarkList}, Path=BindingContext.MapMarkCommand}" CommandParameter="{Binding .}" 
                                                    Grid.Column="2" Grid.RowSpan="2" />
                                             </Grid>
                                         </ViewCell>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
-                            </ListView>
+                            </help:ClickableListView>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Button Text="Cancel" Command="{Binding CancelCommand}" Style="{StaticResource ButtonStyle}" WidthRequest="120"/>

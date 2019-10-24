@@ -1,17 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true"
              x:Class="CAPMission.View.UserSettingsView">
     <ContentPage.Content>
-        <RelativeLayout VerticalOptions="Fill">
+        <RelativeLayout VerticalOptions="Fill" Padding="10,20,10,20">
             <StackLayout Orientation="Vertical" Padding="8,20,8,20"
                 RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.8}"
                 RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.1}">
-                <TableView Intent="Settings">
-                    <TableSection Title="User Settings" TextColor="Blue">
-                        <SwitchCell Text="Enable SAR Functions" On="{Binding SARFunctions}" OnColor="Green" />
-                    </TableSection>
-                </TableView>
+                <StackLayout Orientation="Horizontal" Spacing="4" Padding="0,10,0,0" IsVisible="True">
+                    <Label Text="Enable SAR Functions" />
+                    <Switch IsToggled="{Binding SARFunctions}" HorizontalOptions="End" />
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal" Padding="20,0,30,0">
+                        <Button Text="My Aircraft" Command="{Binding MyAircraftCommand}"  WidthRequest="120"
+                                        Style="{StaticResource ButtonStyle}" HorizontalOptions="Start" />
+                        <Button Text="Close" Command="{Binding HideAircraftCommand}" IsVisible="{Binding ShowAddAircraft}" WidthRequest="120"
+                                Style="{StaticResource ButtonStyle}" HorizontalOptions="End" />
+                    </StackLayout>
+                    <ContentView x:Name="SortieAddContentViewContainer" IsVisible="{Binding ShowAddAircraft}" Content="{Binding AddNewAircraft}" />
+                </StackLayout>
+                <Button Text="Close" Command="{Binding CancelCommand}" Style="{StaticResource ButtonStyle}" WidthRequest="120"/>
             </StackLayout>
         </RelativeLayout>
     </ContentPage.Content>

@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace CAPMission.ViewModel
@@ -21,7 +22,7 @@ namespace CAPMission.ViewModel
         private ICommand cancelCommand;
         private ICommand saveMissionCommand;
         private static List<Mission> missionList;
-
+        private List<Aircraft> aircraftList;
         protected bool PendingEdits;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -30,9 +31,22 @@ namespace CAPMission.ViewModel
         public const string ConvertListKey = "convertlist";
         //Used to get the Mission List from storage
         protected const string MissionListKey = "missionList";
-
+        protected const string AircraftListKey = "aircraftList";
         public INavigation Navigation { get; set; }
         #region Properties
+        public List<Aircraft> AircraftList
+        {
+            get
+            {
+                if (aircraftList == null)
+                {
+                    aircraftList = JsonConvert.DeserializeObject<List<Aircraft>>(StorageHelper.GetVariable(AircraftListKey));
+                    if (aircraftList == null)
+                        aircraftList = new List<Aircraft>();
+                }
+                return aircraftList;
+            }
+        }
         public static List<Mission> MissionList
         {
             get
@@ -55,7 +69,6 @@ namespace CAPMission.ViewModel
                 RaisePropertyChanged("CurrentMission");
             }
         }
-
         public string CurrentMissionNumber
         {
             get
@@ -85,6 +98,15 @@ namespace CAPMission.ViewModel
                     return null;
             }
         }
+        protected static StorageHelper StorageHelper
+        {
+            get
+            {
+                if (storageHelper == null)
+                    storageHelper = new StorageHelper();
+                return storageHelper;
+            }
+        }
         #endregion
         public ICommand CancelCommand { get => cancelCommand; }
         public ICommand SaveMissionCommand { get => saveMissionCommand; }
@@ -110,6 +132,11 @@ namespace CAPMission.ViewModel
                 MissionList[itemIndex] = currentMission;
             SaveMissionCatalog();
         }
+        protected virtual void AddAircraftToList(Aircraft ac)
+        {
+            AircraftList.Add(ac);
+            StorageHelper.SaveVariable(AircraftListKey, JsonConvert.SerializeObject(AircraftList));
+        }
         protected void SaveMissionToList(Mission currentMission)
         {
             MissionList.Add(currentMission);
@@ -121,21 +148,18 @@ namespace CAPMission.ViewModel
             missionList.RemoveAt(itemIndex);
             SaveMissionCatalog();
         }
+        protected async void ModalNavigation(ContentPage page)
+        {
+            StorageHelper.SaveMission(CurrentMission);
+            page.Disappearing += Page_Disappearing;
+            await Navigation.PushModalAsync(page);
+        }
         protected virtual void SwapToNewMission(string newMissionNumber)
         {
             if (CurrentMission != null)
                 UpdateMissionInList(CurrentMission);
             CurrentMission = MissionList.FirstOrDefault(ms => ms.MissionNumber == newMissionNumber);
             ExecSaveMissionCommand();
-        }
-        protected static StorageHelper StorageHelper
-        {
-            get
-            {
-                if (storageHelper == null)
-                    storageHelper = new StorageHelper();
-                return storageHelper;
-            }
         }
         protected virtual void RaisePropertyChanged([CallerMemberName] String propertyName = "")
         {
@@ -144,25 +168,15 @@ namespace CAPMission.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
         protected virtual void RaiseAllPropertiesChanged()
         {
             RaisePropertyChanged("");
         }
-
-        protected async void ModalNavigation(ContentPage page)
-        {
-            StorageHelper.SaveMission(CurrentMission);
-            page.Disappearing += Page_Disappearing;
-            await Navigation.PushModalAsync(page);
-        }
-
         protected virtual void Page_Disappearing(object sender, EventArgs e)
         {
             CurrentMission = StorageHelper.GetCurrentMission();
             RaisePropertyChanged("");
         }
-
         protected async Task<bool> DisplayYesNoDiaglog(string title, string message)
         {
             var answer = await Application.Current.MainPage.DisplayAlert(title, message, "Yes", "No");
@@ -172,7 +186,6 @@ namespace CAPMission.ViewModel
         {
             await Application.Current.MainPage.DisplayAlert(title, message, "OK");
         }
-
         #region Common Commands
         protected virtual async void ExecuteCancelCommand()
         {
@@ -181,6 +194,14 @@ namespace CAPMission.ViewModel
         protected virtual void ExecSaveMissionCommand()
         {
             StorageHelper.SaveMission(CurrentMission);
+        }
+        protected virtual async Task MapMarkCommand(MarkPoint currentPoint)
+        {
+            Location loc = new Location();
+            loc.Latitude = currentPoint.Latitiude;
+            loc.Longitude = currentPoint.Longitude;
+            var placemark = new Placemark();
+            await Map.OpenAsync(loc, new MapLaunchOptions() { Name = currentPoint.Name });
         }
         #endregion
         protected event TimeUpdatedHandler TimeUpdatedEvent;

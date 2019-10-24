@@ -61,22 +61,7 @@ namespace CAPMission.ViewModel
         }
         private async void ExecDisplayOnMap()
         {
-            //await Navigation.PushModalAsync(new MapMarkedPointView(CurrentPoint));
-
-            //Position posit1 = new Position(CurrentPoint.Latitiude, CurrentPoint.Longitude);
-            //Pin point1 = new Pin();
-            //point1.Position = posit1;
-            //point1.Type = PinType.Place;
-            //point1.Label = CurrentPoint.Name;
-            //var map = new Map();
-            //map.Pins.Add(point1);
-            //Required Essentials
-            Location loc = new Location();
-            loc.Latitude = CurrentPoint.Latitiude;
-            loc.Longitude = CurrentPoint.Longitude;
-            var placemark = new Placemark();
-            await Map.OpenAsync(loc, new MapLaunchOptions() { Name = CurrentPoint.Name });
+            await MapMarkCommand(CurrentPoint);
         }
-
     }
 }

@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.1</Version>
+      <Version>12.0.2</Version>
     </PackageReference>
     <PackageReference Include="Plugin.Notifications">
       <Version>4.0.2</Version>
@@ -70,10 +70,10 @@
     <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="28.0.0.1" />
     <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="28.0.0.1" />
     <PackageReference Include="Xamarin.Forms">
-      <Version>3.6.0.220655</Version>
+      <Version>4.1.0.673156</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms.Maps">
-      <Version>3.6.0.220655</Version>
+      <Version>4.1.0.673156</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

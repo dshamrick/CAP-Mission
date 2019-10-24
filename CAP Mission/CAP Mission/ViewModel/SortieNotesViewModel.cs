@@ -17,6 +17,7 @@ namespace CAPMission.ViewModel
         private ICommand markLocationCommand;
         private ICommand saveNoteCommand;
         private ICommand editMarkCommand;
+        private ICommand mapMarkCommand;
         private string selectedSortieNumber;
         private SortieNote currentNote;
         private List<string> sortieNumbers;
@@ -28,6 +29,7 @@ namespace CAPMission.ViewModel
         public ICommand MarkLocationCommand { get => markLocationCommand; }
         public ICommand SaveNoteCommand { get => saveNoteCommand; }
         public ICommand EditMarkCommand { get => editMarkCommand; }
+        public ICommand MapMarkCommand { get => mapMarkCommand; }
         public ObservableCollection<MarkPoint> SortieMarkList { get => currentNote.Marks; }
         public string NoteEntry1
         {
@@ -81,6 +83,7 @@ namespace CAPMission.ViewModel
             markLocationCommand = new Command(ExecMarkLocation);
             saveNoteCommand = new Command(ExecSaveNoteCommand);
             editMarkCommand = new Command<object>(ExecEditMarkPoint);
+            mapMarkCommand = new Command<object>(ExecMapMarkCommand);
         }
         private void LoadSelectedSortieNote()
         {
@@ -150,6 +153,11 @@ namespace CAPMission.ViewModel
         {
             var lookupPoint = (MarkPoint)point;
             ShowEditMarkForm(lookupPoint, false);
+        }
+        private async void ExecMapMarkCommand(Object point)
+        {
+            MarkPoint lookupPoint = (MarkPoint)point;
+            await MapMarkCommand(lookupPoint);
         }
         private async void ShowEditMarkForm(MarkPoint point, bool newPoint)
         {

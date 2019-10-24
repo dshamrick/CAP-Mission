@@ -51,6 +51,11 @@ namespace CAPMission.Library.DataModel
             SortieDate = DateTime.Now;
         }
     }
+    public class Aircraft
+    {
+        public int Index { get; set; }
+        public string TailNumber { get; set; }
+    }
 
     public class GPSConvertedValue
     {
@@ -80,10 +85,7 @@ namespace CAPMission.Library.DataModel
             Marks = new ObservableCollection<MarkPoint>();
         }
     }
-    public class UserSettings
-    {
-        public List<string> TailNumbers { get; set; }
-    }
+
     public class ListSortie
     {
         public string Number { get; set; }

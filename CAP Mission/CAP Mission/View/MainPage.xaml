@@ -34,6 +34,7 @@
                                 Style="{StaticResource ButtonStyle}" />
                         <Button Text="Settings" Command="{Binding SettingsCommand}" 
                                 Style="{StaticResource ButtonStyle}" />
+                        <Button Text="Misc Command" Command="{Binding MiscCommand}" IsVisible="False"/>
                     </StackLayout>
                 </StackLayout>
             </RelativeLayout>

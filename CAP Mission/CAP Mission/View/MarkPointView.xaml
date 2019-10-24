@@ -15,7 +15,7 @@
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <Label Text="Name:" />
-                    <Entry Text="{Binding Name}" />
+                    <Entry Text="{Binding Name}" WidthRequest="120"/>
                 </StackLayout>
                 <StackLayout Orientation="Vertical" Margin="15,10,20,0" Spacing="4" HorizontalOptions="FillAndExpand">
                     <Label Text="{Binding LatText}" />

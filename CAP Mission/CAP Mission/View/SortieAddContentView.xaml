@@ -21,7 +21,8 @@
                     </StackLayout>
                     <StackLayout Orientation="Horizontal" Spacing="4" HorizontalOptions="FillAndExpand">
                         <Label Text="Tail Number"/>
-                        <Entry Text="{Binding Tail}"   HorizontalOptions="FillAndExpand"/>
+                        <Entry Text="{Binding Tail}"   HorizontalOptions="FillAndExpand" WidthRequest="120"/>
+                        <Picker Title="Select from List" ItemsSource="{Binding AircraftPickList}" SelectedItem="{Binding SelectedAircraft}" />
                     </StackLayout>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" Margin="5,0,20,0" HorizontalOptions="CenterAndExpand">
