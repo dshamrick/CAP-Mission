@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:convert="clr-namespace:CAPMission.Converters"
              x:Class="CAPMission.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -9,6 +10,7 @@
                 <Setter Property="CornerRadius" Value="8" />
                 <Setter Property="BackgroundColor" Value="LightGray" />
             </Style>
+            <convert:AlertButtonColorConverter x:Key="AlertButtonColor" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

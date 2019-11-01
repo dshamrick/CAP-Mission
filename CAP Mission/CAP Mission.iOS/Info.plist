@@ -34,7 +34,13 @@
 	<string>CAPMission</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
-  <key>NSLocationWhenInUseUsageDescription</key>
-  <string>To Mark points the app needs access to the device location.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>To Mark points the app needs access to the device location.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+		<string>fetch</string>
+		<string>processing</string>
+	</array>
 </dict>
 </plist>

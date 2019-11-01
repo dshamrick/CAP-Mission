@@ -9,7 +9,7 @@
         <ScrollView>
             <RelativeLayout VerticalOptions="Fill">
                 <StackLayout Orientation="Vertical" Padding="8,10,8,10"
-                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.9}"
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.95}"
                 RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.1}">
                     <StackLayout Orientation="Vertical" Spacing="4" Padding="0,0,10,0">
                         <StackLayout Orientation="Vertical">
@@ -30,22 +30,29 @@
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell>
+                                            <ViewCell.ContextActions>
+                                                <MenuItem Command="{Binding Source={x:Reference ConvertedValues}, Path=BindingContext.DeleteConvertedValueCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    Text="Delete" IsDestructive="True" />
+                                            </ViewCell.ContextActions>
                                             <Grid>
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="30" />
                                                     <RowDefinition Height="30" />
                                                 </Grid.RowDefinitions>
                                                 <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="40" />
                                                     <ColumnDefinition Width="85" />
                                                     <ColumnDefinition Width="100"/>
                                                     <ColumnDefinition Width="100"/>
                                                 </Grid.ColumnDefinitions>
-                                                <Label Text="Entered" Grid.Row="0" Grid.Column="0"/>
-                                                <Label Text="{Binding LatDecDegrees}" Grid.Row="0" Grid.Column="1" />
-                                                <Label Text="{Binding LongDecDegrees}" Grid.Row="0" Grid.Column="2" />
-                                                <Label Text="Converted" Grid.Row="1" Grid.Column="0" />
-                                                <Label Text="{Binding LatDegDM}" Grid.Row="1" Grid.Column="1" />
-                                                <Label Text="{Binding LongDegDM}" Grid.Row="1" Grid.Column="2" />
+                                                <CheckBox IsChecked="{Binding IsChecked}" Grid.Row="0" Grid.Column="0"/>
+                                                <Label Text="Entered" Grid.Row="0" Grid.Column="1"/>
+                                                <Label Text="{Binding LatDecDegrees}" Grid.Row="0" Grid.Column="2" />
+                                                <Label Text="{Binding LongDecDegrees}" Grid.Row="0" Grid.Column="3" />
+                                                <Label Text="Converted" Grid.Row="1" Grid.Column="1" />
+                                                <Label Text="{Binding LatDegDM}" Grid.Row="1" Grid.Column="2" />
+                                                <Label Text="{Binding LongDegDM}" Grid.Row="1" Grid.Column="3" />
                                             </Grid>
                                         </ViewCell>
                                     </DataTemplate>

@@ -9,18 +9,51 @@
             <StackLayout Orientation="Vertical" Padding="8,20,8,20"
                 RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.8}"
                 RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.1}">
-                <StackLayout Orientation="Horizontal" Spacing="4" Padding="0,10,0,0" IsVisible="True">
-                    <Label Text="Enable SAR Functions" />
-                    <Switch IsToggled="{Binding SARFunctions}" HorizontalOptions="End" />
-                </StackLayout>
                 <StackLayout Orientation="Vertical">
                     <StackLayout Orientation="Horizontal" Padding="20,0,30,0">
-                        <Button Text="My Aircraft" Command="{Binding MyAircraftCommand}"  WidthRequest="120"
+                        <Button Text="My Aircraft" Command="{Binding MyAircraftCommand}" WidthRequest="120" IsEnabled="{Binding EnableMyAircraft}"
                                         Style="{StaticResource ButtonStyle}" HorizontalOptions="Start" />
                         <Button Text="Close" Command="{Binding HideAircraftCommand}" IsVisible="{Binding ShowAddAircraft}" WidthRequest="120"
                                 Style="{StaticResource ButtonStyle}" HorizontalOptions="End" />
                     </StackLayout>
                     <ContentView x:Name="SortieAddContentViewContainer" IsVisible="{Binding ShowAddAircraft}" Content="{Binding AddNewAircraft}" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Spacing="4" Padding="0,20,0,0" IsVisible="True">
+                    <Label Text="Enable SAR Functions" Padding="0,0,50,0"/>
+                    <Switch IsToggled="{Binding SARFunctions}" HorizontalOptions="End" />
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="InFlight Alerts" />
+                        <Switch IsToggled="{Binding OpsNormal}" HorizontalOptions="End" />
+                    </StackLayout>
+                    <StackLayout IsVisible="{Binding OpsNormal}" Orientation="Vertical">
+                        <StackLayout Padding="10,0,0,0"  Orientation="Horizontal" HeightRequest="40">
+                            <Label Text="Alert Message" VerticalOptions="Center"/>
+                            <Entry Text="{Binding AlertMessage}" WidthRequest="240" HorizontalOptions="End" />
+                            <Button Text="{Binding AlertButtonText}" Command="{Binding StartAlertCommand}"  BackgroundColor="{Binding AlertsActive, Converter={StaticResource AlertButtonColor}}"
+                                    Style="{StaticResource ButtonStyle}" IsVisible="{Binding AlertsActive}"  WidthRequest="85" HorizontalOptions="End"/>
+                        </StackLayout>
+                        <StackLayout Padding="3,0,0,0"  Orientation="Horizontal">
+                            <Label Text="Alert Timing" VerticalOptions="Center" />
+                            <Switch IsToggled="{Binding AlertTime}" HorizontalOptions="End" />
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="From Engine Start" IsVisible="{Binding TimeDisplaced}" />
+                            <Label Text="Time Based" IsVisible="{Binding TimeBased}" />
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding Checked00}" VerticalOptions="Center"/>
+                                <Label Text=":00" VerticalOptions="Center" />
+                                <CheckBox IsChecked="{Binding Checked15}" VerticalOptions="Center"/>
+                                <Label Text=":15" VerticalOptions="Center" />
+                                <CheckBox IsChecked="{Binding Checked30}" VerticalOptions="Center"/>
+                                <Label Text=":30" VerticalOptions="Center" />
+                                <CheckBox IsChecked="{Binding Checked45}" VerticalOptions="Center"/>
+                                <Label Text=":45" VerticalOptions="Center" />
+                            </StackLayout>
+                        </StackLayout>
+                        <Button Text="Update InFlight Alert Settings" Command="{Binding SaveNotificationCommand}" Style="{StaticResource ButtonStyle}" WidthRequest="90" />
+                    </StackLayout>
                 </StackLayout>
                 <Button Text="Close" Command="{Binding CancelCommand}" Style="{StaticResource ButtonStyle}" WidthRequest="120"/>
             </StackLayout>

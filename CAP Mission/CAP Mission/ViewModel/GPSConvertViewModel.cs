@@ -13,6 +13,7 @@ namespace CAPMission.ViewModel
     {
         private ICommand convertCommand;
         private ICommand clearCommand;
+        private ICommand deleteConvertedValueCommand;
         private string convertedLat;
         private string convertedLong;
 
@@ -52,12 +53,14 @@ namespace CAPMission.ViewModel
 
         public ICommand ConvertCommand { get => convertCommand; }
         public ICommand ClearCommand { get => clearCommand; }
+        public ICommand DeleteConvertedValueCommand { get => deleteConvertedValueCommand; }
         public GPSConvertViewModel(INavigation navigation ): base(navigation)
         {
             try
             {
                 convertCommand = new Command(ConvertValues);
                 clearCommand = new Command(ExecClearList);
+                deleteConvertedValueCommand = new Command<object>(DeleteConvertedValue);
                 ConvertedValues = JsonConvert.DeserializeObject<ObservableCollection<GPSConvertedValue>>(StorageHelper.GetVariable(ConvertListKey));
                 if (ConvertedValues == null)
                     ConvertedValues = new ObservableCollection<GPSConvertedValue>();
@@ -101,6 +104,10 @@ namespace CAPMission.ViewModel
             else
                 StorageHelper.DeleteVariable(ConvertListKey);
             base.ExecuteCancelCommand();
+        }
+        private void DeleteConvertedValue(Object convertedValue)
+        {
+            ConvertedValues.Remove((GPSConvertedValue)convertedValue);
         }
     }
 }

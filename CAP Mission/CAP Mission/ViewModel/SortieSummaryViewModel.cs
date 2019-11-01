@@ -68,13 +68,7 @@ namespace CAPMission.ViewModel
                 RaisePropertyChanged("Tail");
             }
         }
-        public List<String> AircraftPickList
-        {
-            get
-            {
-                return AircraftList.Select(ac => ac.TailNumber).ToList <string>();
-            }
-        }
+
         public string SelectedAircraft
         {
             set

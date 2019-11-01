@@ -1,4 +1,5 @@
 ﻿using CAPMission.Helpers;
+using CAPMission.Interfaces;
 using CAPMission.Library.DataModel;
 using CAPMission.View;
 using Newtonsoft.Json;
@@ -23,16 +24,21 @@ namespace CAPMission.ViewModel
         private ICommand saveMissionCommand;
         private static List<Mission> missionList;
         private List<Aircraft> aircraftList;
+        private AlertSetting alertSetting;
+        //private string currentMissionNumber;
+        private bool alertsActive;
         protected bool PendingEdits;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected static StorageHelper storageHelper;
-        public const string ConvertListKey = "convertlist";
         //Used to get the Mission List from storage
         protected const string MissionListKey = "missionList";
         protected const string AircraftListKey = "aircraftList";
+        protected const string AlertSettingKey = "alertsettings";
+        protected static StorageHelper storageHelper;
+        protected ISendFlightAlert alertService;
+
+        public const string ConvertListKey = "convertlist";
         public INavigation Navigation { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
         #region Properties
         public List<Aircraft> AircraftList
         {
@@ -45,6 +51,13 @@ namespace CAPMission.ViewModel
                         aircraftList = new List<Aircraft>();
                 }
                 return aircraftList;
+            }
+        }
+        public List<String> AircraftPickList
+        {
+            get
+            {
+                return AircraftList.Select(ac => ac.TailNumber).ToList<string>();
             }
         }
         public static List<Mission> MissionList
@@ -66,6 +79,7 @@ namespace CAPMission.ViewModel
             set
             {
                 currentMission = value;
+                //currentMissionNumber = currentMission.MissionNumber;
                 RaisePropertyChanged("CurrentMission");
             }
         }
@@ -73,18 +87,19 @@ namespace CAPMission.ViewModel
         {
             get
             {
-                if (currentMission != null)
+                if (currentMission != null )
                     return currentMission.MissionNumber;
                 else
                     return "";
             }
             set
             {
-                if (value != null && currentMission.MissionNumber != value)
+                if (value != null && currentMission.MissionNumber != value )
                 {
                     SwapToNewMission(value);
-                    currentMission.MissionNumber = value;
-                    RaiseAllPropertiesChanged();
+                    //currentMission.MissionNumber = value;
+                    RaisePropertyChanged(nameof(CurrentMission));
+                    RaisePropertyChanged("SortieList");
                 }
             }
         }
@@ -105,6 +120,49 @@ namespace CAPMission.ViewModel
                 if (storageHelper == null)
                     storageHelper = new StorageHelper();
                 return storageHelper;
+            }
+        }
+        protected AlertSetting AlertSettings
+        {
+            get
+            {
+                if (alertSetting == null)
+                {
+                    alertSetting = JsonConvert.DeserializeObject<AlertSetting>(StorageHelper.GetVariable(AlertSettingKey));
+                    if (alertSetting == null)
+                        alertSetting = new AlertSetting() { AlertMessage = "Operations Normal" };
+                }
+                return alertSetting;
+            }
+            set
+            {
+                StorageHelper.SaveVariable(AlertSettingKey, JsonConvert.SerializeObject(value));
+            }
+        }
+        public bool AlertsActive
+        {
+            get => Preferences.Get("AlertsActive", false);
+            set
+            {
+                Preferences.Set("AlertsActive", value);
+                RaisePropertyChanged(nameof(AlertsActive));
+            }
+        }
+        public string AlertButtonText
+        {
+            get
+            {
+                if (AlertsActive)
+                    return "Stop Alerts";
+                else
+                    return "Start Alerts";
+            }
+        }
+        public bool AlertButtonEnabled
+        {
+            get
+            {
+                return Preferences.Get("OpsNormal", false);
             }
         }
         #endregion
@@ -204,11 +262,83 @@ namespace CAPMission.ViewModel
             await Map.OpenAsync(loc, new MapLaunchOptions() { Name = currentPoint.Name });
         }
         #endregion
-        protected event TimeUpdatedHandler TimeUpdatedEvent;
-        public delegate void TimeUpdatedHandler(DateTime timeUpdateResult);
-        protected virtual void OnTimeUpdated(DateTime timeUpdateResult)
-        {
+        //protected event TimeUpdatedHandler TimeUpdatedEvent;
+        //public delegate void TimeUpdatedHandler(DateTime timeUpdateResult);
+        //protected virtual void OnTimeUpdated(DateTime timeUpdateResult)
+        //{
 
+        //}
+        protected void ActivateNotifications(bool CancelTimer)
+        {
+            AlertsActive = CancelTimer;
+            if (alertService == null)
+                alertService = DependencyService.Get<ISendFlightAlert>();
+
+            Device.StartTimer(TimeSpan.FromSeconds(30), () =>
+                 {                    
+                     return SendAlert(CancelTimer);
+                 });
+        }
+        protected bool SendAlert(bool CancelTimer)
+        {
+            AlertSetting alert = AlertSettings;
+            if (!CancelTimer)
+            {
+                AlertsActive = false;
+                return false;
+            }
+            bool retVal = false;
+            bool sendMessage = false;
+            DateTime current = DateTime.Now;
+            int minuteSelection = -1;
+            if (alert.AlertMessage.Length > 0)
+            {
+                if (alert.AlertTime)
+                {
+                    if (alert.EngineStart > DateTime.MinValue)
+                    {
+                        TimeSpan ts = current - alert.EngineStart;
+                        minuteSelection = ts.Minutes;
+                    }
+                }
+                else
+                {
+                    minuteSelection = current.Minute;
+                }
+                switch (minuteSelection)
+                {
+                    case 00:
+                        if (alert.Checked00)
+                            sendMessage = true;
+                        break;
+                    case 15:
+                        if (alert.Checked15)
+                            sendMessage = true;
+                        break;
+                    case 30:
+                        if (alert.Checked30)
+                            sendMessage = true;
+                        break;
+                    case 45:
+                        if (alert.Checked45)
+                            sendMessage = true;
+                        break;
+                }
+                TimeSpan sendSpan = current - alert.LastAlertSent;
+                if (sendMessage && current.Minute > 5)
+                {
+                    alertService.SendFlightAlert(alert.AlertMessage);
+                    alert.LastAlertSent = current;
+                    AlertSettings = alert;
+                }
+                retVal = true;
+            }
+            else
+            {
+                retVal = false;
+                AlertsActive = false;
+            }
+                return retVal;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using ObjCRuntime;
 using UIKit;
 
 namespace CAPMission.iOS
@@ -25,46 +26,53 @@ namespace CAPMission.iOS
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
-            if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
-            {
-                var notificationSettings = UIUserNotificationSettings.GetSettingsForTypes(
-                    UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, null
-                );
+            //if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
+            //{
+            //    var notificationSettings = UIUserNotificationSettings.GetSettingsForTypes(
+            //        UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, null
+            //    );
 
-                app.RegisterUserNotificationSettings(notificationSettings);
-            }
+            //    app.RegisterUserNotificationSettings(notificationSettings);
+            //}
 
             // check for a notification
-            if (options != null)
-            {
-                // check for a local notification
-                if (options.ContainsKey(UIApplication.LaunchOptionsLocalNotificationKey))
-                {
-                    var localNotification = options[UIApplication.LaunchOptionsLocalNotificationKey] as UILocalNotification;
-                    if (localNotification != null)
-                    {
-                        UIAlertController okayAlertController = UIAlertController.Create(localNotification.AlertAction, localNotification.AlertBody, UIAlertControllerStyle.Alert);
-                        okayAlertController.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
+            //if (options != null)
+            //{
+            //    // check for a local notification
+            //    if (options.ContainsKey(UIApplication.LaunchOptionsLocalNotificationKey))
+            //    {
+            //        var localNotification = options[UIApplication.LaunchOptionsLocalNotificationKey] as UILocalNotification;
+            //        if (localNotification != null)
+            //        {
+            //            UIAlertController okayAlertController = UIAlertController.Create(localNotification.AlertAction, localNotification.AlertBody, UIAlertControllerStyle.Alert);
+            //            okayAlertController.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
 
-                        Window.RootViewController.PresentViewController(okayAlertController, true, null);
+            //            Window.RootViewController.PresentViewController(okayAlertController, true, null);
 
-                        // reset our badge
-                        UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;
-                    }
-                }
-            }
+            //            // reset our badge
+            //            UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;
+            //        }
+            //    }
+            //}
+
+            UIApplication.SharedApplication.SetMinimumBackgroundFetchInterval(UIApplication.BackgroundFetchIntervalMinimum);
+
             return base.FinishedLaunching(app, options);
         }
         public override void ReceivedLocalNotification(UIApplication application, UILocalNotification notification)
         {
             // show an alert
-            UIAlertController okayAlertController = UIAlertController.Create(notification.AlertAction, notification.AlertBody, UIAlertControllerStyle.Alert);
-            okayAlertController.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
+            //UIAlertController okayAlertController = UIAlertController.Create(notification.AlertAction, notification.AlertBody, UIAlertControllerStyle.Alert);
+            //okayAlertController.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
 
-            UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(okayAlertController, true, null);
+            //UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(okayAlertController, true, null);
 
-            // reset our badge
-            UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;
+            //// reset our badge
+            //UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;
         }
+        //public override void PerformFetch(UIApplication application, Action<UIBackgroundFetchResult> completionHandler)
+        //{
+        //    base.PerformFetch(application, completionHandler);
+        //}
     }
 }

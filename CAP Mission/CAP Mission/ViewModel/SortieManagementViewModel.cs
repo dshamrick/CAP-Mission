@@ -6,6 +6,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using System.Linq;
 using CAPMission.View;
+using Xamarin.Essentials;
 
 namespace CAPMission.ViewModel
 {
@@ -22,11 +23,12 @@ namespace CAPMission.ViewModel
         private ICommand editWheelsDnCommand;
         private ICommand editEngineStopCommand;
         private ICommand sortieNoteCommand;
+        private ICommand startAlertCommand;
         private string hobbsEnd;
         private string hobbsStart;
         private string tachEnd;
         private string tachStart;
-
+        
         private Sortie SelectedSortie
         {
             get { return selectedSortie; }
@@ -80,6 +82,14 @@ namespace CAPMission.ViewModel
                     selectedSortie.Tail = value;
                     PendingEdits = true;
                 }
+            }
+        }
+        public string SelectedAircraft
+        {
+            set
+            {
+                TailNumber = value;
+                RaisePropertyChanged(nameof(TailNumber));
             }
         }
         public string HobbsEnd
@@ -201,6 +211,7 @@ namespace CAPMission.ViewModel
                     return "Wheels Down";
             }
         }
+
         #endregion
 
         #region Command Definitions
@@ -214,6 +225,7 @@ namespace CAPMission.ViewModel
         public ICommand EditWheelsDnCommand { get => editWheelsDnCommand; }
         public ICommand EditEngineStopCommand { get => editEngineStopCommand; }
         public ICommand SortieNoteCommand { get => sortieNoteCommand; }
+        public ICommand StartAlertCommand { get => startAlertCommand; }
         #endregion
         public SortieManagementViewModel(Sortie selectedSortie, INavigation navigation): base (navigation)
         {
@@ -229,6 +241,7 @@ namespace CAPMission.ViewModel
             editEngineStopCommand = new Command(ExecEditEngineStopCommand);
             editWheelsDnCommand = new Command(ExecEditWheelsDNCommand);
             sortieNoteCommand = new Command(ExecSortieNoteCommand);
+            startAlertCommand = new Command(ExecStartAlerts);
             PendingEdits = false;
         }
         #region Sortie Time Commands
@@ -358,6 +371,13 @@ namespace CAPMission.ViewModel
                     ExecSaveSortieCommand();
             }
             base.ExecuteCancelCommand();
+        }
+        private void ExecStartAlerts()
+        {
+            if (SelectedSortie.EngineStart > DateTime.MinValue)
+                AlertSettings.EngineStart = SelectedSortie.EngineStart;
+            ActivateNotifications(!AlertsActive);
+            RaisePropertyChanged(nameof(AlertButtonText));
         }
     }
 }

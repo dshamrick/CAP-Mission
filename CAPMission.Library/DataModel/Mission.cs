@@ -59,6 +59,7 @@ namespace CAPMission.Library.DataModel
 
     public class GPSConvertedValue
     {
+        public bool IsChecked { get; set; }
         public string LatDegDM { get; set; }
         public string LongDegDM { get; set; }
         public string LatDecDegrees { get; set; }

@@ -101,6 +101,7 @@
     <Compile Include="Effects\ListViewShadowEffect.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="SendFlightAlertService.cs" />
     <None Include="Entitlements.plist">
       <SubType>Designer</SubType>
     </None>
@@ -165,20 +166,20 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.2</Version>
     </PackageReference>
-    <PackageReference Include="Plugin.Notifications">
-      <Version>4.0.2</Version>
-    </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.1.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Essentials">
-      <Version>1.2.0</Version>
+      <Version>1.3.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
-      <Version>4.1.0.673156</Version>
+      <Version>4.3.0.947036</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms.InputKit">
+      <Version>3.0.15</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms.Maps">
-      <Version>4.1.0.673156</Version>
+      <Version>4.3.0.908675</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
