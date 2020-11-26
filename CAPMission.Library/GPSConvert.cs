@@ -20,7 +20,7 @@ namespace CAPMission.Library
                 lDeg = degrees[0];
                 remainder = "0." + degrees[1];
                 multiplier = float.Parse(remainder) * 60;
-                retVal = lDeg + "° " + multiplier.ToString();
+                retVal = lDeg + "° " + multiplier.ToString().Substring(0,6);
             }
             catch (Exception ex)
             {

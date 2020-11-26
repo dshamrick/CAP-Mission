@@ -1,5 +1,6 @@
 ﻿using CAPMission.View;
 using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,6 +11,7 @@ namespace CAPMission
     {
         public App()
         {
+            VersionTracking.Track();
             InitializeComponent();
             MainPage = new NavigationPage(new MainPage());
         }
@@ -37,6 +39,7 @@ namespace CAPMission
      *          Sortie Entry
      *          Sortie Details page Including Time Entries
      *          Sortie Report - Listing of the sorties on the mission
+     *          Settings - Aircraft List.  Selectable on the sortie entry page
      * 
      * New Development 01/23/2019 
      * Feature - Sortie Notes.  Allow the user to add notes to a sortie 15 hrs
@@ -48,5 +51,7 @@ namespace CAPMission
      * 
      * FlexLayout - Needs to be investigated
      * 
+     * 
+     * On app startup - Check old version against new version and perform any updates that are required.
      */
 }

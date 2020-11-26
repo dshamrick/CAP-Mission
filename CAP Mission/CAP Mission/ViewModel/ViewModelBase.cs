@@ -25,7 +25,7 @@ namespace CAPMission.ViewModel
         private static List<Mission> missionList;
         private List<Aircraft> aircraftList;
         private AlertSetting alertSetting;
-        //private string currentMissionNumber;
+        private string priorVersion;
         private bool alertsActive;
         protected bool PendingEdits;
 
@@ -97,9 +97,10 @@ namespace CAPMission.ViewModel
                 if (value != null && currentMission.MissionNumber != value )
                 {
                     SwapToNewMission(value);
+                    RaiseAllPropertiesChanged();
                     //currentMission.MissionNumber = value;
-                    RaisePropertyChanged(nameof(CurrentMission));
-                    RaisePropertyChanged("SortieList");
+                    //RaisePropertyChanged(nameof(CurrentMission));
+                    //RaisePropertyChanged("SortieList");
                 }
             }
         }
@@ -218,6 +219,7 @@ namespace CAPMission.ViewModel
                 UpdateMissionInList(CurrentMission);
             CurrentMission = MissionList.FirstOrDefault(ms => ms.MissionNumber == newMissionNumber);
             ExecSaveMissionCommand();
+            LoadCurrentMission();
         }
         protected virtual void RaisePropertyChanged([CallerMemberName] String propertyName = "")
         {
@@ -339,6 +341,12 @@ namespace CAPMission.ViewModel
                 AlertsActive = false;
             }
                 return retVal;
+        }
+        protected void CheckForUpdates()
+        {
+            //var currentVersion = VersionTracking.CurrentVersion;
+            //var previousVersion = VersionTracking.PreviousVersion;
+            //ApplicationResources.ResourceManager.GetString("Version");
         }
     }
 }

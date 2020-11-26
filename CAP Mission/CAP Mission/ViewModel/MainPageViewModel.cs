@@ -35,6 +35,7 @@ namespace CAPMission.ViewModel
         public ICommand MiscCommand { get => miscCommand; }
         public MainPageViewModel(INavigation navigation) : base(navigation)
         {
+            CheckForUpdates();
             LoadCurrentMission();
             settingsCommand = new Command(ExecSettingsCommand);
             gpsConvertCommand = new Command(ExecGPSConvertCommand);
