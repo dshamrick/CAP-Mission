@@ -24,6 +24,7 @@ namespace CAPMission.ViewModel
         private ICommand editEngineStopCommand;
         private ICommand sortieNoteCommand;
         private ICommand startAlertCommand;
+
         private string hobbsEnd;
         private string hobbsStart;
         private string tachEnd;
@@ -43,6 +44,10 @@ namespace CAPMission.ViewModel
         public bool CanEngineStartCommand
         {
             get => (selectedSortie.EngineStart == DateTime.MinValue);
+        }
+        public bool CanPickStartTimes
+        {
+            get => (CurrentMission.Sorties.Count > 1);
         }
         public bool CanWheelsUpCommand
         {
@@ -84,12 +89,27 @@ namespace CAPMission.ViewModel
                 }
             }
         }
+        public bool Instruction
+        {
+            get => selectedSortie.Instruction;
+            set { selectedSortie.Instruction = value; }
+        }
         public string SelectedAircraft
         {
             set
             {
-                TailNumber = value;
+                selectedSortie.Tail = value;
                 RaisePropertyChanged(nameof(TailNumber));
+            }
+        }
+        private bool showCopyFromList;
+        public bool ShowCopyFromList
+        {
+            get => showCopyFromList;
+            set
+            {
+                showCopyFromList = value;
+                RaisePropertyChanged(nameof(ShowCopyFromList));
             }
         }
         public string HobbsEnd
@@ -211,7 +231,36 @@ namespace CAPMission.ViewModel
                     return "Wheels Down";
             }
         }
-
+        public List<string> CopySortieList
+        {
+            get
+            {
+                if (CurrentMission.Sorties.Count > 0)
+                {
+                    return CurrentMission.Sorties.Where(st => st.Tail == TailNumber && st.Number != SortieNumber).Select(s => s.Number).ToList<string>();
+                }
+                else
+                    return null;
+            }
+        }
+        public string SelectedStartSortie
+        {
+            get => ("Copy Start Times From?");
+            set
+            {
+                Sortie sortie = CurrentMission.Sorties.FirstOrDefault(s => s.Number == value);
+                if (sortie != null)
+                {
+                    if (sortie.EndHobbs > 0 && sortie.EndTach > 0)
+                    {
+                        selectedSortie.StartHobbs = sortie.EndHobbs;
+                        selectedSortie.StartTach = sortie.EndTach;
+                        RaisePropertyChanged(nameof(HobbsStart));
+                        RaisePropertyChanged(nameof(TachStart));
+                    }
+                }
+            }
+        }
         #endregion
 
         #region Command Definitions
@@ -226,9 +275,11 @@ namespace CAPMission.ViewModel
         public ICommand EditEngineStopCommand { get => editEngineStopCommand; }
         public ICommand SortieNoteCommand { get => sortieNoteCommand; }
         public ICommand StartAlertCommand { get => startAlertCommand; }
+        public ICommand CopyFromCommand { get; }
         #endregion
         public SortieManagementViewModel(Sortie selectedSortie, INavigation navigation): base (navigation)
         {
+            ShowCopyFromList = false;
             SelectedSortie = selectedSortie;
             LoadCurrentMission();
             engineStartCommand = new Command(ExecEngineStartCommand);
@@ -242,6 +293,7 @@ namespace CAPMission.ViewModel
             editWheelsDnCommand = new Command(ExecEditWheelsDNCommand);
             sortieNoteCommand = new Command(ExecSortieNoteCommand);
             startAlertCommand = new Command(ExecStartAlerts);
+            CopyFromCommand = new Command(ExecCopyStartTime);
             PendingEdits = false;
         }
         #region Sortie Time Commands
@@ -353,6 +405,7 @@ namespace CAPMission.ViewModel
                 if (sortie.Tail != selectedSortie.Tail)
                     sortie.Tail = selectedSortie.Tail;
                 sortie.SortieDate = selectedSortie.SortieDate;
+                sortie.Instruction = selectedSortie.Instruction;
 
                 SelectedSortie = sortie;
             }
@@ -378,6 +431,11 @@ namespace CAPMission.ViewModel
                 AlertSettings.EngineStart = SelectedSortie.EngineStart;
             ActivateNotifications(!AlertsActive);
             RaisePropertyChanged(nameof(AlertButtonText));
+        }
+        private void ExecCopyStartTime()
+        {
+            string str = "Test if we got here";
+            ShowCopyFromList = true;
         }
     }
 }

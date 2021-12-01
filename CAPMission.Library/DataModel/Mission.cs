@@ -32,6 +32,9 @@ namespace CAPMission.Library.DataModel
         public DateTime OutGrid { get; set; }
         public DateTime WheelsDown { get; set; }
         public DateTime EngineStop { get; set; }
+        public bool Instruction { get; set; }
+        public string Origin { get; set; }
+        public string Destination { get; set; }
         public string TachTime
         {
             get

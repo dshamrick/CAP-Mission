@@ -6,8 +6,8 @@
              ios:Page.UseSafeArea="true"
              x:Class="CAPMission.View.SortieManagementView">
     <ContentPage.Content>
-        <ScrollView Margin="0,30,0,0">
-            <RelativeLayout VerticalOptions="Fill">
+        <ScrollView Margin="0,20,0,0" HeightRequest="1800">
+            <RelativeLayout VerticalOptions="Fill" >
                 <StackLayout  Padding="8,10,8,20"
                     RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.9}"
                     RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.05}">
@@ -34,7 +34,11 @@
                             <Label Text="Current Mission:" Font="Bold" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" VerticalTextAlignment="Center"/>
                             <Label Text="{Binding CurrentMissionNumber}" Grid.Column="2" Font="Bold" TextColor="Blue" Grid.Row="0" Grid.ColumnSpan="2" VerticalTextAlignment="Center"/>
                             <Label Text="Sortie:" Font="Bold" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" VerticalTextAlignment="Center"/>
-                            <Label Text="{Binding SortieNumber}" Grid.Column="1" Font="Bold" TextColor="Blue" Grid.Row="1" Grid.ColumnSpan="2" VerticalTextAlignment="Center"/>
+                            <Label Text="{Binding SortieNumber}" Grid.Column="1" Font="Bold" TextColor="Blue" Grid.Row="1" Grid.ColumnSpan="1" VerticalTextAlignment="Center"/>
+                            <StackLayout  Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding Instruction}" />
+                                <Label Text="As Instructor" />
+                            </StackLayout>
                             <Label Text="Date:" Font="Bold" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalTextAlignment="Center"/>
                             <DatePicker Date="{Binding SortieDate}" Grid.Column="1" TextColor="Blue" Grid.Row="2" Grid.ColumnSpan="2" />
                             <Label Text="Tail:" Font="Bold" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" VerticalTextAlignment="Center"/>
@@ -68,7 +72,15 @@
                         </Grid>
                     </StackLayout>
                     <StackLayout Orientation="Vertical" >
-                        <Label Text="Times:" />
+                        <StackLayout Orientation="Horizontal" IsVisible="{Binding ShowCopyFromList}">
+                            <!--<Label Text="Times:"  VerticalOptions="Center"/>-->
+                            
+                            <!--<Button Text="Copy Start Times From" Command="{Binding CopyStartTimesCommand}" Style="{StaticResource ButtonStyle}"  
+                                    Margin="20,0,0,0"
+                                    VerticalOptions="Center" HorizontalOptions="End"/>
+                            SelectedItem="{Binding SelectedAircraft}"
+                            -->
+                        </StackLayout>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.02}"
@@ -100,7 +112,11 @@
                             <Entry Text="{Binding TachStart}" Grid.Row="2" Grid.Column="2" Keyboard="Numeric"/>
                             <Label Text="{Binding HobbsTime}" Grid.Row="3" Grid.Column="0"/>
                             <Label Text="{Binding TachTime}" Grid.Row="3" Grid.Column="2" />
-                            <Button Text="Update" Command="{Binding SaveSortieCommand}" Style="{StaticResource ButtonStyle}" Grid.Column="4" Grid.RowSpan="2" Grid.Row="1"/>
+                            <Button Text="Update" Command="{Binding SaveSortieCommand}" Style="{StaticResource ButtonStyle}" Grid.Column="4" Grid.RowSpan="2" Grid.Row="2"/>
+                            <Picker Title="Copy Start Times From" ItemsSource="{Binding CopySortieList}"  Grid.Column="4" Grid.Row="0" Grid.RowSpan="2"
+                                    IsEnabled="{Binding CanPickStartTimes}" SelectedItem="{Binding SelectedStartSortie}"
+                                    VerticalOptions="Center" HorizontalOptions="End">
+                            </Picker>
                         </Grid>
                     </StackLayout>
                     <Grid>
