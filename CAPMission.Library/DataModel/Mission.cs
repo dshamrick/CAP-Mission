@@ -25,6 +25,7 @@ namespace CAPMission.Library.DataModel
         public double StartHobbs { get; set; }
         public double EndTach { get; set; }
         public double StartTach { get; set; }
+        public double EstimateTime { get; set; }
         public DateTime SortieDate { get; set; }
         public DateTime EngineStart { get; set; }
         public DateTime WheelsUp { get; set; }

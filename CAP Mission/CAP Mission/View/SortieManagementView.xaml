@@ -6,7 +6,7 @@
              ios:Page.UseSafeArea="true"
              x:Class="CAPMission.View.SortieManagementView">
     <ContentPage.Content>
-        <ScrollView Margin="0,20,0,0" HeightRequest="1800">
+        <StackLayout Orientation="Vertical" Margin="0,20,0,0" HeightRequest="2500">
             <RelativeLayout VerticalOptions="Fill" >
                 <StackLayout  Padding="8,10,8,20"
                     RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.9}"
@@ -62,7 +62,7 @@
                                 <RowDefinition Height="35"/>
                             </Grid.RowDefinitions>
                             <Label Text="{Binding EngineStartLabel}" Grid.Column="0" Grid.Row="0"/>
-                            <Button Text="Edit" Command="{Binding EditESCommand}" Grid.Column="1" Grid.Row="0"/>
+                            <Button Text="Edit" Command="{Binding EditESCommand}" Grid.Column="1" Grid.Row="0" HorizontalOptions="Center"/>
                             <Label Text="{Binding WheelsUpLabel}"    Grid.Column="0" Grid.Row="1"/>
                             <Button Text="Edit" Command="{Binding EditWheelsUpCommand}" Grid.Column="1" Grid.Row="1"/>
                             <Label Text="{Binding WheelsDownLabel}"  Grid.Column="0" Grid.Row="2"/>
@@ -73,13 +73,6 @@
                     </StackLayout>
                     <StackLayout Orientation="Vertical" >
                         <StackLayout Orientation="Horizontal" IsVisible="{Binding ShowCopyFromList}">
-                            <!--<Label Text="Times:"  VerticalOptions="Center"/>-->
-                            
-                            <!--<Button Text="Copy Start Times From" Command="{Binding CopyStartTimesCommand}" Style="{StaticResource ButtonStyle}"  
-                                    Margin="20,0,0,0"
-                                    VerticalOptions="Center" HorizontalOptions="End"/>
-                            SelectedItem="{Binding SelectedAircraft}"
-                            -->
                         </StackLayout>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -139,6 +132,6 @@
                     </StackLayout>
                 </StackLayout>
             </RelativeLayout>
-        </ScrollView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
