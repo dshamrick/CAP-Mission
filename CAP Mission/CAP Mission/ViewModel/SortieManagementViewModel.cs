@@ -196,7 +196,7 @@ namespace CAPMission.ViewModel
             get
             {
                 if (SelectedSortie.EngineStart > DateTime.MinValue)
-                    return "Engine Start " + SelectedSortie.EngineStart.ToString("HH:mm");
+                    return "Engine Start:     " + SelectedSortie.EngineStart.ToString("HH:mm");
                 else
                     return "Engine Start";
             }
@@ -206,7 +206,7 @@ namespace CAPMission.ViewModel
             get
             {
                 if (SelectedSortie.WheelsUp > DateTime.MinValue)
-                    return "Wheels Up " + SelectedSortie.WheelsUp.ToString("HH:mm");
+                    return "Wheels Up:     " + SelectedSortie.WheelsUp.ToString("HH:mm");
                 else
                     return "Wheels Up";
             }
@@ -216,9 +216,19 @@ namespace CAPMission.ViewModel
             get
             {
                 if (SelectedSortie.EngineStop > DateTime.MinValue)
-                    return "Engine Stop " + SelectedSortie.EngineStop.ToString("HH:mm");
+                    return "Engine Stop:     " + SelectedSortie.EngineStop.ToString("HH:mm");
                 else
                     return "Engine Stop";
+            }
+        }
+        public string FlightTime
+        {
+            get
+            {
+                if (SelectedSortie.EstimateTime > 0)
+                    return SelectedSortie.EstimateTime.ToString();
+                else
+                    return "0.0";
             }
         }
         public string WheelsDownLabel
@@ -226,7 +236,7 @@ namespace CAPMission.ViewModel
             get
             {
                 if (SelectedSortie.WheelsDown > DateTime.MinValue)
-                    return "Wheels Down " + SelectedSortie.WheelsDown.ToString("HH:mm");
+                    return "Wheels Down:     " + SelectedSortie.WheelsDown.ToString("HH:mm");
                 else
                     return "Wheels Down";
             }
@@ -406,6 +416,16 @@ namespace CAPMission.ViewModel
                     sortie.Tail = selectedSortie.Tail;
                 sortie.SortieDate = selectedSortie.SortieDate;
                 sortie.Instruction = selectedSortie.Instruction;
+                if (SelectedSortie.EngineStart > DateTime.MinValue && SelectedSortie.EngineStop > DateTime.MinValue)
+                {
+                    TimeSpan ts = SelectedSortie.EngineStop.Subtract(SelectedSortie.EngineStart);
+                    int hrs = ts.Hours;
+                    int mnts = ts.Minutes;
+                    int tenths = mnts / 6;
+                    string fltTime = hrs.ToString() + "." + tenths.ToString();
+                    sortie.EstimateTime = Convert.ToDouble(fltTime);
+                    RaisePropertyChanged(nameof(FlightTime));
+                }
 
                 SelectedSortie = sortie;
             }

@@ -10,9 +10,17 @@
             <RelativeLayout VerticalOptions="Fill" >
                 <StackLayout  Padding="8,10,8,20"
                     RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.9}"
-                    RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.05}">
+                    RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.05}"
+                    >
                     <StackLayout Orientation="Horizontal" >
                         <Grid >
+                            <!--<Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>-->
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.02}"
                                                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.15}"/>
@@ -40,7 +48,7 @@
                                 <Label Text="As Instructor" />
                             </StackLayout>
                             <Label Text="Date:" Font="Bold" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalTextAlignment="Center"/>
-                            <DatePicker Date="{Binding SortieDate}" Grid.Column="1" TextColor="Blue" Grid.Row="2" Grid.ColumnSpan="2" />
+                            <DatePicker Date="{Binding SortieDate}" Grid.Column="1" TextColor="Blue" Grid.Row="2"  />
                             <Label Text="Tail:" Font="Bold" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" VerticalTextAlignment="Center"/>
                             <Entry Text="{Binding TailNumber}" Grid.Column="1"  TextColor="Blue" Grid.Row="3" WidthRequest="100" />
                             <Picker Title="Select from List" ItemsSource="{Binding AircraftPickList}" SelectedItem="{Binding SelectedAircraft}"  Grid.Row="3" Grid.Column="2"/>
@@ -53,7 +61,8 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="180" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition Width="140" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="35"/>
@@ -69,13 +78,15 @@
                             <Button Text="Edit" Command="{Binding EditWheelsDnCommand}" Grid.Column="1" Grid.Row="2"/>
                             <Label Text="{Binding EngineStopLabel}"  Grid.Column="0" Grid.Row="3"/>
                             <Button Text="Edit" Command="{Binding EditEngineStopCommand}" Grid.Column="1" Grid.Row="3"/>
+                            <Label Text="Est Hours:" Grid.Column="2" Grid.Row="1" />
+                            <Label Text="{Binding FlightTime}" Grid.Column="2" Grid.Row="2" />
                         </Grid>
                     </StackLayout>
                     <StackLayout Orientation="Vertical" >
                         <StackLayout Orientation="Horizontal" IsVisible="{Binding ShowCopyFromList}">
                         </StackLayout>
                         <Grid>
-                            <Grid.ColumnDefinitions>
+                            <!--<Grid.ColumnDefinitions>
                                 <ColumnDefinition RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.02}"
                                                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.15}"/>
                                 <ColumnDefinition RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.17}"
@@ -86,6 +97,13 @@
                                                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.15}"/>
                                 <ColumnDefinition RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.80}"
                                                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.15}" />
+                            </Grid.ColumnDefinitions>-->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="120"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30" />
@@ -106,7 +124,7 @@
                             <Label Text="{Binding HobbsTime}" Grid.Row="3" Grid.Column="0"/>
                             <Label Text="{Binding TachTime}" Grid.Row="3" Grid.Column="2" />
                             <Button Text="Update" Command="{Binding SaveSortieCommand}" Style="{StaticResource ButtonStyle}" Grid.Column="4" Grid.RowSpan="2" Grid.Row="2"/>
-                            <Picker Title="Copy Start Times From" ItemsSource="{Binding CopySortieList}"  Grid.Column="4" Grid.Row="0" Grid.RowSpan="2"
+                            <Picker Title="Copy Start Times From" ItemsSource="{Binding CopySortieList}"  Grid.Column="4" Grid.Row="0"
                                     IsEnabled="{Binding CanPickStartTimes}" SelectedItem="{Binding SelectedStartSortie}"
                                     VerticalOptions="Center" HorizontalOptions="End">
                             </Picker>
