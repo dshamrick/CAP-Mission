@@ -6,7 +6,7 @@
              ios:Page.UseSafeArea="true"
              x:Class="CAPMission.View.SortieManagementView">
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical" Margin="0,20,0,0" HeightRequest="2500">
+        <StackLayout Orientation="Vertical" Margin="0,20,0,0" HeightRequest="3500">
             <RelativeLayout VerticalOptions="Fill" >
                 <StackLayout  Padding="8,10,8,20"
                     RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.9}"
@@ -38,6 +38,10 @@
                                 <RowDefinition Height="28"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="38"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
                             <Label Text="Current Mission:" Font="Bold" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" VerticalTextAlignment="Center"/>
                             <Label Text="{Binding CurrentMissionNumber}" Grid.Column="2" Font="Bold" TextColor="Blue" Grid.Row="0" Grid.ColumnSpan="2" VerticalTextAlignment="Center"/>
@@ -55,6 +59,14 @@
                             <Button Text="Note" Command="{Binding SortieNoteCommand}" Style="{StaticResource ButtonStyle}" Grid.Column="4" Grid.RowSpan="2" Grid.Row="0" />
                             <Button Text="{Binding AlertButtonText}" Command="{Binding StartAlertCommand}"  BackgroundColor="{Binding AlertsActive, Converter={StaticResource AlertButtonColor}}"
                                     Style="{StaticResource ButtonStyle}" Grid.Column="4" Grid.RowSpan="2" Grid.Row="2" IsEnabled="{Binding AlertButtonEnabled}" />
+                            <Label Text="Origin:" Font="Bold" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding Origin}" Grid.Column="1"  TextColor="Blue" Grid.Row="4" WidthRequest="100" />
+                            <Label Text="Dest:" Font="Bold" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding Destination}" Grid.Column="3"  TextColor="Blue" Grid.Row="4" WidthRequest="100" />
+                            <Label Text="Crew/Pax:" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" VerticalTextAlignment="Center"/>
+                            <Entry Text="{Binding Pax1}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" WidthRequest="300" />
+                            <Entry Text="{Binding Pax2}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" WidthRequest="300" />
+                            <Entry Text="{Binding Pax3}" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" WidthRequest="300" />
                         </Grid>
                     </StackLayout>
                     <StackLayout Orientation="Vertical" Padding="10,0,10,10">

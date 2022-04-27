@@ -27,7 +27,7 @@
                         <ContentView x:Name="SortieAddContentViewContainer" IsVisible="{Binding ShowSortieAddContent}" Content="{Binding AddNewSortie}" />
                     </StackLayout>
                     <StackLayout>
-                        <help:ClickableListView x:Name="SortieList" ItemsSource="{Binding SortieList}" RowClickCommand="{Binding SortieSelectCommand}" HeightRequest="420">
+                        <help:ClickableListView x:Name="SortieList" ItemsSource="{Binding SortieList}" RowClickCommand="{Binding SortieSelectCommand}" HeightRequest="720">
                             <!--  SelectedItem="{Binding SelectedSortie, Mode=TwoWay}"-->
                             <ListView.ItemTemplate>
                                 <DataTemplate>

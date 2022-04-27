@@ -36,6 +36,9 @@ namespace CAPMission.Library.DataModel
         public bool Instruction { get; set; }
         public string Origin { get; set; }
         public string Destination { get; set; }
+        public string Pax1 { get; set; }
+        public string Pax2 { get; set; }
+        public string Pax3 { get; set; }
         public string TachTime
         {
             get

@@ -231,6 +231,57 @@ namespace CAPMission.ViewModel
                     return "0.0";
             }
         }
+        public string Origin
+        {
+            get => selectedSortie.Origin;
+            set
+            {
+                if (selectedSortie.Origin != value)
+                {
+                    selectedSortie.Origin = value.ToUpper();
+                    PendingEdits = true;
+                }
+            }
+        }
+        public string Destination
+        {
+            get => selectedSortie.Destination;
+            set
+            {
+                if (selectedSortie.Destination != value)
+                {
+                    selectedSortie.Destination = value.ToUpper();
+                    PendingEdits = true;
+                }
+            }
+        }
+        public string Pax1
+        {
+            get => selectedSortie.Pax1;
+            set
+            {
+                selectedSortie.Pax1 = value;
+                PendingEdits = true;
+            }
+        }
+        public string Pax2
+        {
+            get => selectedSortie.Pax2;
+            set
+            {
+                selectedSortie.Pax2 = value;
+                PendingEdits = true;
+            }
+        }
+        public string Pax3
+        {
+            get => selectedSortie.Pax3;
+            set
+            {
+                selectedSortie.Pax3 = value;
+                PendingEdits = true;
+            }
+        }
         public string WheelsDownLabel
         {
             get
@@ -416,6 +467,11 @@ namespace CAPMission.ViewModel
                     sortie.Tail = selectedSortie.Tail;
                 sortie.SortieDate = selectedSortie.SortieDate;
                 sortie.Instruction = selectedSortie.Instruction;
+                sortie.Origin = selectedSortie.Origin;
+                sortie.Destination = selectedSortie.Destination;
+                sortie.Pax1 = selectedSortie.Pax1;
+                sortie.Pax2 = selectedSortie.Pax2;
+                sortie.Pax3 = selectedSortie.Pax3;
                 if (SelectedSortie.EngineStart > DateTime.MinValue && SelectedSortie.EngineStop > DateTime.MinValue)
                 {
                     TimeSpan ts = SelectedSortie.EngineStop.Subtract(SelectedSortie.EngineStart);

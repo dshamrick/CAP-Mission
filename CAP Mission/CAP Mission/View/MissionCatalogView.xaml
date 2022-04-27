@@ -23,7 +23,7 @@
                         <Button Text="ADD" Command="{Binding AddMissionCommand}" Style="{StaticResource ButtonStyle}" IsEnabled="{Binding CanAddMission}" WidthRequest="80" HorizontalOptions="End"/>
                     </StackLayout>
                     <StackLayout>
-                        <ListView x:Name="MissionList" ItemsSource="{Binding MissionCatalogList}" SelectedItem="{Binding SelectedMission}" HeightRequest="360" RowHeight="40" Margin="0,8,0,0">
+                        <ListView x:Name="MissionList" ItemsSource="{Binding MissionCatalogList}" SelectedItem="{Binding SelectedMission}" HeightRequest="720" RowHeight="40" Margin="0,8,0,0">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell>
